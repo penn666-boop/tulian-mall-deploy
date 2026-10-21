@@ -1,0 +1,97 @@
+spring:
+  profiles:
+    active: none
+  message:
+    encoding: UTF-8
+  datasource:
+    druid:
+      url: jdbc:mysql://${TL_DB_HOST:mysql}:${TL_DB_PORT:3306}/${TL_DB_NAME:litemall}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: ${TL_DB_USER:litemall}
+      password: ${TL_DB_PASSWORD:}
+      initial-size: 10
+      max-active: 50
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      filters: stat,wall
+
+server:
+  port: 8080
+
+logging:
+  config: classpath:logback-spring.xml
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+litemall:
+  wx:
+    app-id: ${TL_WX_APPID:}
+    app-secret: ${TL_WX_SECRET:}
+    mch-id: ${TL_WX_MCHID:}
+    mch-key: ${TL_WX_MCHKEY:}
+    notify-url: ${TL_WX_NOTIFY_URL:}
+    recharge-notify-url: ${TL_WX_RECHARGE_NOTIFY_URL:}
+    key-path: ${TL_WX_KEY_PATH:}
+
+  notify:
+    mail:
+      enable: false
+      host: ""
+      username: ""
+      password: ""
+      sendfrom: ""
+      sendto: ""
+      port: 465
+    sms:
+      enable: false
+      active: none
+      sign: 途链茶集
+      template: []
+      tencent:
+        appid: 0
+        appkey: ""
+      aliyun:
+        regionId: ""
+        accessKeyId: ""
+        accessKeySecret: ""
+
+  express:
+    enable: false
+    appId: ""
+    appKey: ""
+    vendors: []
+
+  storage:
+    active: local
+    local:
+      storagePath: /storage
+      address: ${TL_STORAGE_BASE_URL:}/wx/storage/fetch/
+    aliyun:
+      endpoint: ""
+      accessKeyId: ""
+      accessKeySecret: ""
+      bucketName: ""
+    tencent:
+      secretId: ""
+      secretKey: ""
+      region: ""
+      bucketName: ""
+    qiniu:
+      endpoint: ""
+      accessKey: ""
+      secretKey: ""
+      bucketName: ""
+
+swagger:
+  production: true

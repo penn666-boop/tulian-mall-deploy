@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS litemall DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER USER 'litemall'@'%' IDENTIFIED BY '__DB_PASSWORD__';
+GRANT ALL PRIVILEGES ON litemall.* TO 'litemall'@'%';
