@@ -105,10 +105,25 @@ nginx -t >/dev/null 2>&1 && systemctl reload nginx
 if [ -f "/etc/letsencrypt/live/$DOMAIN/fullchain.pem" ]; then
   ok "证书已存在，跳过签发"
 else
+  # --expand：服务器上可能已有别的证书（如 IP 证书），新域名会合并进它而不新建目录
   certbot certonly --webroot -w "$WEBROOT" -d "$DOMAIN" \
-    --non-interactive --agree-tos --email "$EMAIL" --keep-until-expiring
+    --expand --non-interactive --agree-tos --email "$EMAIL" --keep-until-expiring
 fi
 rm -f "$ACME_CONF"
+
+# 探测包含该域名的证书实际所在目录（--expand 时可能与旧证书同目录）
+CERT_DIR=""
+for d in /etc/letsencrypt/live/*/; do
+  [ -f "$d/fullchain.pem" ] || continue
+  if openssl x509 -in "$d/fullchain.pem" -noout -ext subjectAltName 2>/dev/null | grep -q "$DOMAIN"; then
+    CERT_DIR="$d"; break
+  fi
+done
+if [ -z "$CERT_DIR" ]; then
+  CERT_DIR="/etc/letsencrypt/live/$DOMAIN/"
+  warn "未找到包含 $DOMAIN 的证书目录，按默认路径写入"
+fi
+echo "证书目录：$CERT_DIR"
 
 # 自动续期
 if command -v systemctl >/dev/null && systemctl list-unit-files 2>/dev/null | grep -q certbot.timer; then
@@ -134,8 +149,8 @@ server {
     listen 443 ssl http2;
     server_name $DOMAIN;
 
-    ssl_certificate     /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;
+    ssl_certificate     ${CERT_DIR}fullchain.pem;
+    ssl_certificate_key ${CERT_DIR}privkey.pem;
     ssl_protocols       TLSv1.2 TLSv1.3;
     ssl_ciphers         HIGH:!aNULL:!MD5;
 
