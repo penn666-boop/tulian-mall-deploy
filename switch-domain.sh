@@ -69,7 +69,21 @@ if [ -n "$PUB_IP" ] && [ "$RES_IP" != "$PUB_IP" ]; then
 fi
 ok "DNS 已生效：$DOMAIN -> $RES_IP"
 
-say "2/7 准备证书工具"
+say "2/7 探测容器与后台目录"
+MYSQL_CT="$(docker ps --format '{{.Names}}' 2>/dev/null | grep -iE 'mysql' | head -1 || true)"
+MALL_CT="$(docker ps --format '{{.Names}}' 2>/dev/null | grep -iE 'tulian-mall|^mall' | head -1 || true)"
+[ -n "$MYSQL_CT" ] || warn "未找到 mysql 容器，数据库地址替换将跳过"
+[ -n "$MALL_CT" ] || warn "未找到 mall 容器，稍后将尝试用 docker compose 启动"
+echo "mysql 容器：${MYSQL_CT:-未找到}    商城容器：${MALL_CT:-未找到}"
+
+# 自动探测管理后台静态站目录，避免路径猜错导致 /mall/ 404
+for d in "$APP_ROOT/admin" /var/www/tulian-admin "$APP_ROOT/admin-dist" /var/www/tulian-mall-admin; do
+  if [ -f "$d/index.html" ]; then ADMIN_DIR="$d"; break; fi
+done
+if [ ! -f "$ADMIN_DIR/index.html" ]; then
+  warn "未找到后台静态站 index.html（将指向 ${ADMIN_DIR}，/mall/ 可能 404，但不影响小程序接口）"
+fi
+echo "后台静态站：$ADMIN_DIR"
 if ! command -v certbot >/dev/null; then
   echo "安装 certbot..."
   apt-get update -qq && apt-get install -y -qq certbot
@@ -183,10 +197,12 @@ else
   DB_PASS="$(grep -E '^MYSQL_PASSWORD=' "$ENV_FILE" | cut -d= -f2- || true)"
 
   query() {
-    docker exec -i tulian-mysql sh -c "MYSQL_PWD=\"$DB_PASS\" exec mysql -ulitemall --default-character-set=utf8mb4 -N -B litemall"
+    docker exec -i "$MYSQL_CT" sh -c "MYSQL_PWD=\"$DB_PASS\" exec mysql -ulitemall --default-character-set=utf8mb4 -N -B litemall"
   }
 
-  if [ -n "$OLD_BASE" ] && [ "$OLD_BASE" != "$NEW_BASE" ]; then
+  if [ -z "$MYSQL_CT" ]; then
+    warn "跳过数据库地址替换（未找到 mysql 容器）"
+  elif [ -n "$OLD_BASE" ] && [ "$OLD_BASE" != "$NEW_BASE" ]; then
     echo "旧地址基址：$OLD_BASE"
     printf "UPDATE litemall_goods   SET pic_url = REPLACE(pic_url, '%s', '%s') WHERE pic_url LIKE '%%%s%%';\nUPDATE litemall_storage SET url      = REPLACE(url,      '%s', '%s') WHERE url      LIKE '%%%s%%';\nUPDATE litemall_ad      SET url      = REPLACE(url,      '%s', '%s') WHERE url      LIKE '%%%s%%';\nUPDATE litemall_brand   SET pic_url  = REPLACE(pic_url,  '%s', '%s') WHERE pic_url  LIKE '%%%s%%';\n" \
       "$OLD_BASE" "$NEW_BASE" "$OLD_BASE" \
