@@ -1,0 +1,12 @@
+@import "../points/points.wxss";
+
+.summary-btn {
+  margin-top: 26rpx;
+  align-self: flex-start;
+  background: #e09a2d;
+  color: #3d2b1f;
+  font-size: 25rpx;
+  font-weight: 600;
+  padding: 14rpx 44rpx;
+  border-radius: 40rpx;
+}

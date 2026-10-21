@@ -1,0 +1,52 @@
+<view class="page">
+  <view class="header">
+    <text class="header-label">当前余额（元）</text>
+    <text class="header-num">{{balance}}</text>
+  </view>
+
+  <view class="block">
+    <view class="block-title">选择充值套餐</view>
+    <view class="plans">
+      <view class="plan {{planId == item.id ? 'plan-on' : ''}}"
+            wx:for="{{plans}}" wx:key="id"
+            data-plan="{{item}}" bindtap="selectPlan">
+        <view class="plan-amount">¥{{item.amount}}</view>
+        <view class="plan-gift" wx:if="{{item.giftAmount > 0}}">送 ¥{{item.giftAmount}}</view>
+        <view class="plan-gift" wx:else>无赠送</view>
+        <view class="plan-points" wx:if="{{item.giftPoints > 0}}">+{{item.giftPoints}} 积分</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="block">
+    <view class="block-title">或输入自定义金额</view>
+    <view class="custom">
+      <text class="custom-symbol">¥</text>
+      <input class="custom-input" type="digit" placeholder="请输入金额，1 元起"
+             value="{{amount}}" bindinput="onAmountInput" />
+    </view>
+    <view class="custom-tip">自定义金额不参与赠送活动</view>
+  </view>
+
+  <view class="summary-bar" wx:if="{{selectedAmount > 0}}">
+    <view class="summary-line">
+      <text>应付金额</text>
+      <text class="summary-amount">¥{{selectedAmount}}</text>
+    </view>
+    <view class="summary-line" wx:if="{{giftAmount > 0}}">
+      <text>赠送金额</text>
+      <text class="summary-gift">¥{{giftAmount}}</text>
+    </view>
+    <view class="summary-line" wx:if="{{giftPoints > 0}}">
+      <text>赠送积分</text>
+      <text class="summary-gift">{{giftPoints}}</text>
+    </view>
+  </view>
+
+  <view class="pay-bar">
+    <button class="pay-btn {{paying ? 'pay-btn-disabled' : ''}}" bindtap="submit">
+      {{paying ? '处理中...' : '微信支付'}}
+    </button>
+    <view class="pay-tip">充值金额仅可用于本商城消费，不可提现</view>
+  </view>
+</view>

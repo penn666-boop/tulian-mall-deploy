@@ -1,0 +1,88 @@
+.page {
+  min-height: 100vh;
+  background: #f6f2ec;
+}
+
+.summary {
+  background: linear-gradient(135deg, #3d2b1f 0%, #6b4f35 100%);
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-label {
+  font-size: 24rpx;
+  color: rgba(247, 239, 226, 0.75);
+}
+
+.summary-num {
+  margin-top: 14rpx;
+  font-size: 68rpx;
+  font-weight: 600;
+  color: #f3dcae;
+  line-height: 1.1;
+}
+
+.summary-tip {
+  margin-top: 14rpx;
+  font-size: 22rpx;
+  color: rgba(247, 239, 226, 0.6);
+}
+
+.list {
+  margin: 24rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 8rpx 28rpx;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #f3ece2;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row-title {
+  font-size: 27rpx;
+  color: #3d2b1f;
+}
+
+.row-sub {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #9b8c7c;
+}
+
+.row-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.row-amount {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.row-amount.plus { color: #d99a3f; }
+.row-amount.minus { color: #4a7c59; }
+
+.row-balance {
+  margin-top: 6rpx;
+  font-size: 21rpx;
+  color: #b3a596;
+}
+
+.empty,
+.loading {
+  text-align: center;
+  padding: 40rpx 0;
+  font-size: 23rpx;
+  color: #9b8c7c;
+}

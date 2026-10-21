@@ -1,0 +1,197 @@
+.member-page {
+  min-height: 100vh;
+  background: #f6f2ec;
+  padding-bottom: 40rpx;
+}
+
+/* 等级卡 */
+.hero {
+  background: linear-gradient(135deg, #3d2b1f 0%, #6b4f35 100%);
+  padding: 44rpx 40rpx 48rpx;
+  color: #f7efe2;
+}
+
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-level {
+  display: flex;
+  align-items: center;
+}
+
+.hero-level-name {
+  font-size: 42rpx;
+  font-weight: 600;
+  color: #f3dcae;
+  letter-spacing: 2rpx;
+}
+
+.hero-level-discount {
+  margin-left: 16rpx;
+  font-size: 22rpx;
+  color: #3d2b1f;
+  background: #e8c98a;
+  border-radius: 20rpx;
+  padding: 4rpx 16rpx;
+}
+
+.hero-growth {
+  font-size: 24rpx;
+  color: rgba(247, 239, 226, 0.75);
+}
+
+.progress-wrap {
+  margin-top: 36rpx;
+}
+
+.progress-bar {
+  height: 10rpx;
+  background: rgba(247, 239, 226, 0.22);
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.progress-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #e09a2d, #f3dcae);
+  border-radius: 6rpx;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  margin-top: 16rpx;
+  font-size: 23rpx;
+  color: rgba(247, 239, 226, 0.8);
+}
+
+/* 资产三栏 */
+.assets {
+  margin: -28rpx 24rpx 0;
+  background: #fff;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  box-shadow: 0 8rpx 24rpx rgba(61, 43, 31, 0.08);
+}
+
+.asset {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.asset-num {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #3d2b1f;
+}
+
+.asset-label {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: #9b8c7c;
+}
+
+.asset-line {
+  width: 1rpx;
+  height: 48rpx;
+  background: #efe6da;
+}
+
+/* 快捷入口 */
+.actions {
+  margin: 24rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  display: flex;
+  padding: 30rpx 0;
+}
+
+.action {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.action-icon {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #fff;
+  margin-bottom: 12rpx;
+}
+
+.action-icon.recharge { background: linear-gradient(135deg, #d99a3f, #e8bb6f); }
+.action-icon.points { background: linear-gradient(135deg, #b98a52, #d3ab77); }
+.action-icon.balance { background: linear-gradient(135deg, #8f6b45, #b89266); }
+.action-icon.shop { background: linear-gradient(135deg, #6b4f35, #93724f); }
+
+.action-text {
+  font-size: 23rpx;
+  color: #6b5b4b;
+}
+
+/* 等级列表 */
+.block {
+  margin: 24rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx 28rpx 24rpx;
+}
+
+.block-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #3d2b1f;
+  margin-bottom: 22rpx;
+}
+
+.level-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.level-item {
+  flex: 1;
+  margin: 0 6rpx;
+  border: 1rpx solid #efe6da;
+  border-radius: 14rpx;
+  padding: 18rpx 8rpx;
+  text-align: center;
+  background: #fdfbf7;
+}
+
+.level-item-on {
+  border-color: #d99a3f;
+  background: #fdf5e6;
+}
+
+.level-item-name {
+  font-size: 25rpx;
+  font-weight: 600;
+  color: #3d2b1f;
+  margin-bottom: 10rpx;
+}
+
+.level-item-rule {
+  font-size: 20rpx;
+  color: #9b8c7c;
+  line-height: 1.7;
+}
+
+.block-tip {
+  margin-top: 22rpx;
+  font-size: 22rpx;
+  color: #9b8c7c;
+  line-height: 1.6;
+}

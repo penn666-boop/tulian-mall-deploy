@@ -1,0 +1,25 @@
+<view class="page">
+  <view class="summary">
+    <text class="summary-label">储值余额（元）</text>
+    <text class="summary-num">{{balance}}</text>
+    <text class="summary-tip">累计充值 {{rechargeTotal}} 元</text>
+    <view class="summary-btn" bindtap="goRecharge">立即充值</view>
+  </view>
+
+  <view class="list">
+    <view class="row" wx:for="{{list}}" wx:key="id">
+      <view class="row-left">
+        <view class="row-title">{{item.remark || item.typeText}}</view>
+        <view class="row-sub">{{item.timeText}}</view>
+      </view>
+      <view class="row-right">
+        <text class="row-amount {{item.amount > 0 ? 'plus' : 'minus'}}">{{item.amount > 0 ? '+' : ''}}{{item.amount}}</text>
+        <text class="row-balance">余额 {{item.balance}}</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">暂无储值记录</view>
+    <view class="loading" wx:if="{{loading}}">加载中...</view>
+    <view class="loading" wx:if="{{finished && list.length > 0}}">没有更多了</view>
+  </view>
+</view>

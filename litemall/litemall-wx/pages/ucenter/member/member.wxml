@@ -1,0 +1,73 @@
+<view class="member-page">
+  <!-- 等级卡 -->
+  <view class="hero">
+    <view class="hero-top">
+      <view class="hero-level">
+        <text class="hero-level-name">{{level.name || '普通会员'}}</text>
+        <text class="hero-level-discount" wx:if="{{level && level.discount < 1}}">会员 {{level.discount * 10}} 折</text>
+      </view>
+      <view class="hero-growth">成长值 {{account.growth || 0}}</view>
+    </view>
+
+    <view class="progress-wrap">
+      <view class="progress-bar">
+        <view class="progress-inner" style="width: {{progress}}%"></view>
+      </view>
+      <view class="progress-text" wx:if="{{nextLevel}}">再消费 {{needGrowth}} 元升级 {{nextLevel.name}}</view>
+      <view class="progress-text" wx:else>已是最高等级，尊享全部权益</view>
+    </view>
+  </view>
+
+  <!-- 资产三栏 -->
+  <view class="assets">
+    <view class="asset" bindtap="goPoints">
+      <text class="asset-num">{{account.points || 0}}</text>
+      <text class="asset-label">可用积分</text>
+    </view>
+    <view class="asset-line"></view>
+    <view class="asset" bindtap="goBalance">
+      <text class="asset-num">¥{{account.balance || 0}}</text>
+      <text class="asset-label">储值余额</text>
+    </view>
+    <view class="asset-line"></view>
+    <view class="asset">
+      <text class="asset-num">¥{{account.rechargeTotal || 0}}</text>
+      <text class="asset-label">累计充值</text>
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="actions">
+    <view class="action" bindtap="goRecharge">
+      <view class="action-icon recharge">充</view>
+      <text class="action-text">储值充值</text>
+    </view>
+    <view class="action" bindtap="goPoints">
+      <view class="action-icon points">积</view>
+      <text class="action-text">积分明细</text>
+    </view>
+    <view class="action" bindtap="goBalance">
+      <view class="action-icon balance">余</view>
+      <text class="action-text">储值明细</text>
+    </view>
+    <view class="action" bindtap="goShopping">
+      <view class="action-icon shop">购</view>
+      <text class="action-text">去逛逛</text>
+    </view>
+  </view>
+
+  <!-- 会员权益 -->
+  <view class="block">
+    <view class="block-title">会员等级</view>
+    <view class="level-list">
+      <view class="level-item {{level && item.level == level.level ? 'level-item-on' : ''}}"
+            wx:for="{{levels}}" wx:key="id">
+        <view class="level-item-name">{{item.name}}</view>
+        <view class="level-item-rule">成长值 {{item.minGrowth}}</view>
+        <view class="level-item-rule">折扣 {{item.discount * 10}} 折</view>
+        <view class="level-item-rule">积分 {{item.pointRate}} 倍</view>
+      </view>
+    </view>
+    <view class="block-tip">{{level.desc || '消费即得积分与成长值，成长值达标自动升级'}}</view>
+  </view>
+</view>

@@ -1,0 +1,24 @@
+<view class="page">
+  <view class="summary">
+    <text class="summary-label">可用积分</text>
+    <text class="summary-num">{{points}}</text>
+    <text class="summary-tip">消费 1 元得 1 积分起，等级越高倍率越高</text>
+  </view>
+
+  <view class="list">
+    <view class="row" wx:for="{{list}}" wx:key="id">
+      <view class="row-left">
+        <view class="row-title">{{item.remark || item.typeText}}</view>
+        <view class="row-sub">{{item.timeText}}</view>
+      </view>
+      <view class="row-right">
+        <text class="row-amount {{item.amount > 0 ? 'plus' : 'minus'}}">{{item.amount > 0 ? '+' : ''}}{{item.amount}}</text>
+        <text class="row-balance">余额 {{item.balance}}</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">暂无积分记录</view>
+    <view class="loading" wx:if="{{loading}}">加载中...</view>
+    <view class="loading" wx:if="{{finished && list.length > 0}}">没有更多了</view>
+  </view>
+</view>
